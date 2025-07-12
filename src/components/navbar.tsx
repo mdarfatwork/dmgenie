@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { MessageSquareText } from "lucide-react";
+import { auth } from "@clerk/nextjs/server";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const { userId } = await auth();
+
   return (
     <nav className="container flex items-center justify-between py-6 mx-auto">
       <Link href="/" className="flex items-center space-x-2 cursor-pointer">
@@ -13,16 +16,33 @@ export default function Navbar() {
       </Link>
 
       <div className="flex items-center space-x-2">
-        <Link href="/sign-in">
-          <Button className="cursor-pointer" variant="outline">
-            Sign In
-          </Button>
-        </Link>
-        <Link href="/sign-up">
-          <Button className="bg-[#9798ff] text-white hover:bg-[#8789f2] cursor-pointer">
-            Sign Up
-          </Button>
-        </Link>
+        {userId ? (
+          <>
+            <Link href="/jobs">
+              <Button className="cursor-pointer" variant="outline">
+                Jobs
+              </Button>
+            </Link>
+            <Link href="/profile">
+              <Button className="bg-[#9798ff] text-white hover:bg-[#8789f2] cursor-pointer">
+                Profile
+              </Button>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href="/sign-in">
+              <Button className="cursor-pointer" variant="outline">
+                Sign In
+              </Button>
+            </Link>
+            <Link href="/sign-up">
+              <Button className="bg-[#9798ff] text-white hover:bg-[#8789f2] cursor-pointer">
+                Sign Up
+              </Button>
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
