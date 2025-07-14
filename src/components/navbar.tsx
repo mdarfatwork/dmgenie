@@ -18,9 +18,9 @@ export default async function Navbar() {
       <div className="flex items-center space-x-2">
         {userId ? (
           <>
-            <Link href="/jobs">
+            <Link href="/job">
               <Button className="cursor-pointer" variant="outline">
-                Jobs
+                Job
               </Button>
             </Link>
             <Link href="/profile">
