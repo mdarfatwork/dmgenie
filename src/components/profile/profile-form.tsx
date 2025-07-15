@@ -14,12 +14,21 @@ import { useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
+import { useAction } from "next-safe-action/hooks";
+import { createProfile } from "@/actions/profile.action";
+import type { ProfileData } from "@/lib/queries";
 
-export default function ProfileForm() {
-  const [originalText, setOriginalText] = useState<string | null>(null);
-  const [editedText, setEditedText] = useState<string>("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+interface Props {
+  userId: string;
+  userEmail: string;
+  profile: ProfileData;
+}
+
+export default function ProfileForm({ userId, userEmail, profile }: Props) {
+  const [originalText, setOriginalText] = useState<string | null>(
+    profile?.aboutMe ?? null
+  );
+  const [editedText, setEditedText] = useState<string>(profile?.aboutMe ?? "");
 
   const dropzone = useDropzone({
     onDropFile: async (file: File) => {
@@ -27,7 +36,6 @@ export default function ProfileForm() {
         const extractedText = await pdfToText(file);
         setOriginalText(extractedText);
         setEditedText(extractedText);
-        setUploadedFileName(file.name);
         toast.success("PDF uploaded successfully");
       } catch (error) {
         console.error("Failed to extract text from PDF", error);
@@ -49,28 +57,15 @@ export default function ProfileForm() {
     setEditedText(value);
   };
 
-  const handleSubmit = async () => {
-    if (!editedText.trim()) {
-      toast.error("Please enter some content before submitting");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      // Simulate API call - replace with your actual submission logic
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Your submission logic here
-      console.log("Submitting:", editedText);
-
-      toast.success("Profile updated successfully!");
-    } catch (error) {
-      console.error("Submission failed:", error);
-      toast.error("Failed to update profile. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const { execute, isExecuting } = useAction(createProfile, {
+    onSuccess: ({}) => {
+      toast.success("Your profile is created sucessfully");
+    },
+    onError: ({ error }) => {
+      toast.error("Error while creating profile");
+      console.error("Error while creating profile", error);
+    },
+  });
 
   const handleReset = () => {
     if (originalText) {
@@ -82,7 +77,6 @@ export default function ProfileForm() {
   const handleStartOver = () => {
     setOriginalText(null);
     setEditedText("");
-    setUploadedFileName(null);
     toast.info("Starting over with new upload");
   };
 
@@ -96,20 +90,13 @@ export default function ProfileForm() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <FileText className="h-5 w-5 text-primary" />
-              <div>
-                <h2 className="text-lg font-semibold">About Me</h2>
-                {uploadedFileName && (
-                  <p className="text-sm text-muted-foreground">
-                    From: {uploadedFileName}
-                  </p>
-                )}
-              </div>
+              <h2 className="text-lg font-semibold">About Me</h2>
             </div>
             <Button
               variant="outline"
               size="sm"
               onClick={handleStartOver}
-              className="gap-2"
+              className="space-x2 cursor-pointer"
             >
               <X className="h-4 w-4" />
               Start Over
@@ -139,18 +126,24 @@ export default function ProfileForm() {
           {/* Action buttons */}
           <div className="flex gap-3">
             <Button
-              onClick={handleSubmit}
-              disabled={isSubmitting || !editedText.trim()}
+              onClick={() => {
+                execute({
+                  clerkId: userId,
+                  email: userEmail,
+                  aboutMe: editedText,
+                });
+              }}
+              disabled={isExecuting || !editedText.trim()}
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {isExecuting ? "Submitting..." : "Submit"}
             </Button>
 
             {hasChanges && (
               <Button
                 variant="outline"
                 onClick={handleReset}
-                disabled={isSubmitting}
+                disabled={isExecuting}
               >
                 Reset
               </Button>

@@ -1,5 +1,6 @@
 import ProfileForm from "@/components/profile/profile-form";
 import { Button } from "@/components/ui/button";
+import { getProfileByUserId } from "@/lib/queries";
 import { SignOutButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
@@ -8,11 +9,14 @@ export default async function Page() {
   const user = await currentUser();
   if (!user) redirect("/");
 
-  //   const userEmail = user.emailAddresses[0]?.emailAddress || "";
+  const userId = user.id;
+  const userEmail = user.emailAddresses[0]?.emailAddress;
+
+  const profile = await getProfileByUserId();
 
   return (
     <section className="min-h-screen">
-      <ProfileForm />
+      <ProfileForm userId={userId} userEmail={userEmail} profile={profile} />
       <div className="flex items-center justify-center">
         <SignOutButton>
           <Button
