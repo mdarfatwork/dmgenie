@@ -78,7 +78,7 @@ export default async function JobPage() {
                     year: "numeric",
                   }).format(new Date(job.createdAt))}
                 </div>
-                <Link href={`/jobs/${job.id}`}>
+                <Link href={`/job/${job.id}`}>
                   <Button
                     variant="outline"
                     size="sm"

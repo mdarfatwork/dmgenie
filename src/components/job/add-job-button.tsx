@@ -28,9 +28,11 @@ import { addJobSchema, AddJobSchemaType } from "@/lib/zod-schema";
 import { useAction } from "next-safe-action/hooks";
 import { addJob } from "@/actions/job.actions";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function AddJobButton() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const isDev = process.env.NODE_ENV === "development";
 
@@ -51,9 +53,10 @@ export function AddJobButton() {
   });
 
   const { execute, isExecuting } = useAction(addJob, {
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       toast.success("your job is added successfully");
       setOpen(false);
+      router.push(`/job/${data.id}`);
     },
     onError: ({ error }) => {
       toast.error("failed to add the job");
