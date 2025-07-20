@@ -35,7 +35,16 @@ export const deleteJobSchema = z.object({
   id: z.cuid2(),
 });
 
+export const addMessageSchema = z.object({
+  jobId: z.cuid2(),
+  employeeName: z.string().min(1, "Employee name is required"),
+  employeeRole: z.string().min(1, "Employee role is required"),
+  messageTone: z.enum(["professional", "friendly", "casual", "formal"]),
+  customInstructions: z.string().optional(),
+});
+
 export type CreateProfileSchemaType = z.infer<typeof createProfileSchema>;
 export type AddJobSchemaType = z.infer<typeof addJobSchema>;
 export type EditJobSchemaType = z.infer<typeof editJobSchema>;
 export type DeleteJobSchemaType = z.infer<typeof deleteJobSchema>;
+export type AddMessageSchemaType = z.infer<typeof addMessageSchema>;

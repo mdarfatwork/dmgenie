@@ -1,4 +1,4 @@
-import { getJobById } from "@/lib/queries";
+import { getJobById, getMessagesByJobId } from "@/lib/queries";
 import {
   Card,
   CardContent,
@@ -11,6 +11,7 @@ import { Calendar, Building2, Briefcase } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { EditJobButton } from "@/components/job/edit-job-button";
 import { DeleteJobButton } from "@/components/job/delete-job-button";
+import Messages from "@/components/job/messages";
 
 type Props = {
   params: Promise<{
@@ -21,6 +22,8 @@ type Props = {
 export default async function JobPage({ params }: Props) {
   const { id: jobId } = await params;
   const job = await getJobById(jobId);
+
+  const messages = await getMessagesByJobId(jobId);
 
   if (!job) {
     return (
@@ -99,6 +102,7 @@ export default async function JobPage({ params }: Props) {
           </CardFooter>
         </Card>
       </div>
+      <Messages job={job} messages={messages} />
     </main>
   );
 }

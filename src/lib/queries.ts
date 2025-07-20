@@ -2,8 +2,7 @@
 
 import { db } from "@/db";
 import { auth } from "@clerk/nextjs/server";
-import { profiles } from "@/schema/profile";
-import { jobs } from "@/schema/job";
+import { profiles, jobs, messages } from "@/schema";
 import { and, desc, eq } from "drizzle-orm";
 
 export async function getProfileByUserId() {
@@ -69,6 +68,28 @@ export async function getJobById(jobId: string) {
   }
 }
 
+export async function getMessagesByJobId(jobId: string) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      throw new Error("User not authenticated");
+    }
+
+    const userMessages = await db
+      .select()
+      .from(messages)
+      .where(eq(messages.jobId, jobId))
+      .orderBy(desc(messages.createdAt));
+
+    return userMessages || null;
+  } catch (error) {
+    console.error("Error fetching job by ID:", error);
+    return null;
+  }
+}
+
 export type ProfileData = Awaited<ReturnType<typeof getProfileByUserId>>;
 export type JobsData = Awaited<ReturnType<typeof getJobsByUserId>>;
 export type JobData = Awaited<ReturnType<typeof getJobById>>;
+export type MessagesData = Awaited<ReturnType<typeof getMessagesByJobId>>;
