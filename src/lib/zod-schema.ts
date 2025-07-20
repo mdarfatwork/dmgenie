@@ -43,8 +43,13 @@ export const addMessageSchema = z.object({
   customInstructions: z.string().optional(),
 });
 
+export const deleteMessageSchema = z.object({
+  id: z.cuid2(),
+});
+
 export type CreateProfileSchemaType = z.infer<typeof createProfileSchema>;
 export type AddJobSchemaType = z.infer<typeof addJobSchema>;
 export type EditJobSchemaType = z.infer<typeof editJobSchema>;
 export type DeleteJobSchemaType = z.infer<typeof deleteJobSchema>;
 export type AddMessageSchemaType = z.infer<typeof addMessageSchema>;
+export type DeleteMessageSchemaType = z.infer<typeof deleteMessageSchema>;

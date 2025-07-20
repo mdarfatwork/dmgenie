@@ -13,6 +13,7 @@ import type { MessagesData } from "@/lib/queries";
 import { CheckCircle, Copy, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { DeleteMessageButton } from "./delete-message-button";
 
 type Props = {
   message: NonNullable<MessagesData>[number];
@@ -71,6 +72,9 @@ export function ViewMessageDialog({ message }: Props) {
         </div>
         <div className="whitespace-pre-wrap text-sm leading-relaxed mt-4">
           {message.generatedMessage}
+        </div>
+        <div className="flex flex-col sm:flex-row justify-end">
+          <DeleteMessageButton messageId={message.id} />
         </div>
       </DialogContent>
     </Dialog>

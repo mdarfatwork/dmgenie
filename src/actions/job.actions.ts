@@ -5,6 +5,7 @@ import {
   addJobSchema,
   addMessageSchema,
   deleteJobSchema,
+  deleteMessageSchema,
   editJobSchema,
 } from "@/lib/zod-schema";
 import { db } from "@/db";
@@ -216,3 +217,20 @@ Generate a personalized email message that feels authentic and increases the cha
       }
     }
   );
+
+export const deleteMessage = actionClient
+  .inputSchema(deleteMessageSchema)
+  .action(async ({ parsedInput: { id } }) => {
+    const { userId } = await auth();
+    if (!userId) throw new Error("User not authenticated");
+
+    const messageToDelete = await db.query.messages.findFirst({
+      where: (messages, { eq }) => eq(messages.id, id),
+    });
+
+    if (!messageToDelete) throw new Error("Message not found");
+
+    await db.delete(messages).where(eq(messages.id, id));
+
+    return { success: true };
+  });
