@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Review the Terms and Conditions for using DM Genie.",
 };
 
-export default function TermsPage() {
+export default function Page() {
   return (
     <div className="px-4 py-12">
       <div className="mx-auto max-w-5xl space-y-6">
@@ -79,7 +79,7 @@ export default function TermsPage() {
 
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">8. Contact Us</h2>
-          <Link href="/contact">Contact Page</Link>
+          <Link className="font-semibold underline text-blue-500" href="/contact">Contact Page</Link>
         </section>
       </div>
     </div>
