@@ -63,7 +63,7 @@ export default function Messages({ job, messages }: Props) {
                       year: "numeric",
                     }).format(new Date(message.updatedAt))}
                   </span>
-                  <ViewMessageDialog message={message} />
+                  <ViewMessageDialog companyName={job.companyName} jobRole={job.jobRole} message={message} />
                 </div>
               </div>
             ))}

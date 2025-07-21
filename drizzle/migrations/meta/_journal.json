@@ -15,6 +15,13 @@
       "when": 1752907388225,
       "tag": "0001_handy_talisman",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1753079149603,
+      "tag": "0002_omniscient_blob",
+      "breakpoints": true
     }
   ]
 }

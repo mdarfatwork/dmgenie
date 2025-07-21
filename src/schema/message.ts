@@ -1,7 +1,14 @@
 import { createId } from "@paralleldrive/cuid2";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { jobs } from "./job";
+
+export const messageToneEnum = pgEnum("message_tone", [
+  "professional",
+  "friendly",
+  "casual",
+  "formal",
+]);
 
 export const messages = pgTable("messages", {
   id: text("id").primaryKey().$default(createId).unique().notNull(),
@@ -10,7 +17,7 @@ export const messages = pgTable("messages", {
     .references(() => jobs.id, { onDelete: "cascade" }),
   employeeName: text("employee_name").notNull(),
   employeeRole: text("employee_role").notNull(),
-  messageTone: text("message_tone").notNull(),
+  messageTone: messageToneEnum("message_tone").notNull(),
   customInstructions: text("custom_instructions"),
   generatedMessage: text("generated_message").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

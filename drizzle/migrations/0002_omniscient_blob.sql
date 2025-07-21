@@ -1,0 +1,2 @@
+CREATE TYPE "public"."message_tone" AS ENUM('professional', 'friendly', 'casual', 'formal');--> statement-breakpoint
+ALTER TABLE "messages" ALTER COLUMN "message_tone" SET DATA TYPE "public"."message_tone" USING "message_tone"::"public"."message_tone";

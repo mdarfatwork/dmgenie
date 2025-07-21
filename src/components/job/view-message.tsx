@@ -14,12 +14,15 @@ import { CheckCircle, Copy, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { DeleteMessageButton } from "./delete-message-button";
+import { EditMessageButton } from "./edit-message-button";
 
 type Props = {
   message: NonNullable<MessagesData>[number];
+  companyName: string;
+  jobRole: string;
 };
 
-export function ViewMessageDialog({ message }: Props) {
+export function ViewMessageDialog({ message, companyName, jobRole }: Props) {
   const [copied, setCopied] = useState(false);
   const handleCopy = async () => {
     try {
@@ -73,7 +76,8 @@ export function ViewMessageDialog({ message }: Props) {
         <div className="whitespace-pre-wrap text-sm leading-relaxed mt-4">
           {message.generatedMessage}
         </div>
-        <div className="flex flex-col sm:flex-row justify-end">
+        <div className="flex flex-col sm:flex-row justify-end gap-2">
+          <EditMessageButton companyName={companyName} jobRole={jobRole} message={message} />
           <DeleteMessageButton messageId={message.id} />
         </div>
       </DialogContent>
