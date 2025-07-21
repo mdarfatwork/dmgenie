@@ -1,11 +1,27 @@
 import { Briefcase, Eye } from "lucide-react";
 import { AddJobButton } from "@/components/job/add-job-button";
-import { getJobsByUserId } from "@/lib/queries";
+import { getJobsByUserId, getProfileByUserId } from "@/lib/queries";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function JobPage() {
+  const profile = await getProfileByUserId();
+
+  if (!profile) {
+    return (
+      <div className="flex flex-col items-center justify-center py-8 gap-5">
+        <p className="text-lg">
+          You haven&apos;t upload the resume profile, please upload resume then create a
+          job
+        </p>
+        <Link href="/profile">
+          <Button variant="default" className="bg-blue-500 hover:bg-blue-600 text-white text-xl cursor-pointer">Profile</Button>
+        </Link>
+      </div>
+    );
+  }
+
   const jobs = await getJobsByUserId();
 
   if (!jobs || jobs.length === 0) {
