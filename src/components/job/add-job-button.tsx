@@ -134,7 +134,7 @@ export function AddJobButton() {
                   <FormControl>
                     <Textarea
                       placeholder="Enter the job description, requirements, and key responsibilities..."
-                      className="min-h-[120px]"
+                      className="min-h-[120px] max-h-[60vh] overflow-y-scroll"
                       disabled={isExecuting}
                       {...field}
                     />

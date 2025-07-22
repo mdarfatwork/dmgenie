@@ -101,7 +101,7 @@ export function EditJobButton({ job }: Props) {
                   <FormLabel>Job Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      className="min-h-[100px]"
+                      className="min-h-[120px] max-h-[60vh] overflow-y-scroll"
                       {...field}
                       disabled={isExecuting}
                     />
