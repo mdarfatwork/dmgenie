@@ -84,7 +84,7 @@ export function AddJobButton() {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(execute)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(execute)} className="space-y-6 max-h-[70vh] overflow-auto">
             <FormField
               control={form.control}
               name="companyName"
@@ -134,7 +134,7 @@ export function AddJobButton() {
                   <FormControl>
                     <Textarea
                       placeholder="Enter the job description, requirements, and key responsibilities..."
-                      className="min-h-[120px] max-h-[60vh] overflow-y-scroll"
+                      className="min-h-[120px]"
                       disabled={isExecuting}
                       {...field}
                     />

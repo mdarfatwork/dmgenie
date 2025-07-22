@@ -66,7 +66,7 @@ export function EditJobButton({ job }: Props) {
           <DialogDescription>Update your job details.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(execute)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(execute)} className="space-y-6 max-h-[70vh] overflow-auto">
             <FormField
               control={form.control}
               name="companyName"
@@ -101,7 +101,7 @@ export function EditJobButton({ job }: Props) {
                   <FormLabel>Job Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      className="min-h-[120px] max-h-[60vh] overflow-y-scroll"
+                      className="min-h-[120px]"
                       {...field}
                       disabled={isExecuting}
                     />
