@@ -34,10 +34,8 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* AI Robot SVG */}
           <div className="order-first lg:order-last flex justify-center lg:justify-end">
             <div className="relative">
-              {/* Floating dots */}
               <div className="absolute -top-4 -left-4 w-3 h-3 bg-[#9798ff] rounded-full opacity-60"></div>
               <div className="absolute -top-8 left-8 w-2 h-2 bg-[#9798ff] rounded-full opacity-40"></div>
               <div className="absolute -top-2 left-16 w-4 h-4 bg-[#9798ff] rounded-full opacity-30"></div>
@@ -47,7 +45,6 @@ export default function Hero() {
               <div className="absolute bottom-8 -right-4 w-2 h-2 bg-[#9798ff] rounded-full opacity-35"></div>
               <div className="absolute bottom-12 left-4 w-4 h-4 bg-[#9798ff] rounded-full opacity-25"></div>
 
-              {/* Main AI Robot */}
               <svg
                 width="280"
                 height="280"
@@ -56,7 +53,6 @@ export default function Hero() {
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-64 h-64 md:w-80 md:h-80"
               >
-                {/* Robot Head */}
                 <rect
                   x="60"
                   y="80"
@@ -68,7 +64,6 @@ export default function Hero() {
                   strokeWidth="3"
                 />
 
-                {/* AI Text */}
                 <text
                   x="140"
                   y="150"
@@ -81,19 +76,16 @@ export default function Hero() {
                   AI
                 </text>
 
-                {/* Robot Antennas */}
                 <circle cx="100" cy="70" r="6" fill="#9798ff" />
                 <rect x="98" y="50" width="4" height="25" fill="#9798ff" />
                 <circle cx="180" cy="70" r="6" fill="#9798ff" />
                 <rect x="178" y="50" width="4" height="25" fill="#9798ff" />
 
-                {/* Robot Eyes */}
                 <circle cx="110" cy="120" r="8" fill="white" />
                 <circle cx="170" cy="120" r="8" fill="white" />
                 <circle cx="110" cy="120" r="4" fill="#9798ff" />
                 <circle cx="170" cy="120" r="4" fill="#9798ff" />
 
-                {/* Robot Smile */}
                 <path
                   d="M 120 170 Q 140 185 160 170"
                   stroke="white"
@@ -102,7 +94,6 @@ export default function Hero() {
                   strokeLinecap="round"
                 />
 
-                {/* Robot Arms */}
                 <rect
                   x="20"
                   y="120"
@@ -120,7 +111,6 @@ export default function Hero() {
                   fill="#9798ff"
                 />
 
-                {/* Robot Body */}
                 <rect
                   x="80"
                   y="200"
@@ -132,7 +122,6 @@ export default function Hero() {
                   strokeWidth="2"
                 />
 
-                {/* Body Details */}
                 <rect
                   x="95"
                   y="215"

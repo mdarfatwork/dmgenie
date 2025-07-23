@@ -86,7 +86,6 @@ export default function ProfileForm({ userId, userEmail, profile }: Props) {
     <div className="container sm:max-w-2xl mx-auto py-8">
       {originalText ? (
         <div className="space-y-6">
-          {/* Header with file info */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <FileText className="h-5 w-5 text-primary" />
@@ -103,7 +102,6 @@ export default function ProfileForm({ userId, userEmail, profile }: Props) {
             </Button>
           </div>
 
-          {/* Textarea */}
           <div className="space-y-2">
             <Label htmlFor="about-me">
               Edit your about me section
@@ -123,7 +121,6 @@ export default function ProfileForm({ userId, userEmail, profile }: Props) {
             </p>
           </div>
 
-          {/* Action buttons */}
           <div className="flex gap-3">
             <Button
               onClick={() => {

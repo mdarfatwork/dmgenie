@@ -127,7 +127,7 @@ export const addMessage = actionClient
       const aboutMe = profile?.aboutMe;
 
       const prompt = `
-You are a professional email writer helping someone reach out to company employees for job opportunities. Generate a personalized email message based on the following information:
+You are a professional LinkedIn outreach specialist helping someone connect with company employees for job opportunities. Generate a personalized LinkedIn message based on the following information:
 
 **Job Information:**
 - Company: ${job.companyName}
@@ -145,22 +145,34 @@ You are a professional email writer helping someone reach out to company employe
 - Tone: ${messageTone}
 - Custom Instructions: ${customInstructions || "None provided"}
 
-**Guidelines:**
-1. Keep the message professional and respectful
-2. Mention specific details about the job and company
-3. Show genuine interest in the position
-4. Keep it concise (around 200-300 words)
-5. Include a clear call to action
-6. Use the specified tone: ${messageTone}
-7. Address the employee by name and acknowledge their role
-8. Don't be overly familiar, maintain professional boundaries
+**LinkedIn Message Guidelines:**
+1. Keep it concise and LinkedIn-appropriate (150-250 words max)
+2. Start with a brief, personalized connection request reason
+3. Mention specific details about the job/company that show you've done research
+4. Reference the recipient's role and expertise respectfully
+5. Show genuine interest without being pushy
+6. Include a soft call to action (coffee chat, brief call, or advice)
+7. Use the specified tone: ${messageTone}
+8. Be authentic and human, not overly sales-y
+9. End with gratitude and respect for their time
+10. No subject line needed (LinkedIn messages don't use them)
 
-**Format:**
-- Subject line first
-- Professional email body
-- Appropriate closing
+**LinkedIn Message Structure:**
+- Friendly greeting with their name
+- Brief personal introduction and connection reason
+- Specific mention of their company/role
+- Your interest in the position with relevant details
+- Soft ask for advice, insights, or connection
+- Gracious closing
 
-Generate a personalized email message that feels authentic and increases the chance of getting a positive response.
+**Important Notes:**
+- This is a LinkedIn connection message, not an email
+- Keep it conversational but professional
+- Focus on building a genuine connection, not just asking for a job
+- Show respect for their expertise and time
+- Make it easy for them to say yes to a brief conversation
+
+Generate a personalized LinkedIn message that feels authentic, respectful, and likely to get a positive response.
 `;
 
       let generatedMessage;
@@ -254,11 +266,10 @@ export const editMessage = actionClient
         throw new Error("User not authenticated");
       }
 
-      // Verify the message exists and belongs to the user
       const existingMessage = await db.query.messages.findFirst({
         where: (messages, { eq }) => eq(messages.id, id),
         with: {
-          job: true, // Assuming you have a relation set up
+          job: true,
         },
       });
 
@@ -266,7 +277,6 @@ export const editMessage = actionClient
         throw new Error("Message not found");
       }
 
-      // Check if the user owns the job this message belongs to
       const job = await getJobById(jobId);
       if (!job) {
         throw new Error("Job not found");
@@ -285,9 +295,8 @@ export const editMessage = actionClient
 
       const aboutMe = profile?.aboutMe;
 
-      // Generate new message with updated information
       const prompt = `
-You are a professional email writer helping someone reach out to company employees for job opportunities. Generate a personalized email message based on the following information:
+You are a professional LinkedIn outreach specialist helping someone connect with company employees for job opportunities. Generate a personalized LinkedIn message based on the following information:
 
 **Job Information:**
 - Company: ${job.companyName}
@@ -305,22 +314,34 @@ You are a professional email writer helping someone reach out to company employe
 - Tone: ${messageTone}
 - Custom Instructions: ${customInstructions || "None provided"}
 
-**Guidelines:**
-1. Keep the message professional and respectful
-2. Mention specific details about the job and company
-3. Show genuine interest in the position
-4. Keep it concise (around 200-300 words)
-5. Include a clear call to action
-6. Use the specified tone: ${messageTone}
-7. Address the employee by name and acknowledge their role
-8. Don't be overly familiar, maintain professional boundaries
+**LinkedIn Message Guidelines:**
+1. Keep it concise and LinkedIn-appropriate (150-250 words max)
+2. Start with a brief, personalized connection request reason
+3. Mention specific details about the job/company that show you've done research
+4. Reference the recipient's role and expertise respectfully
+5. Show genuine interest without being pushy
+6. Include a soft call to action (coffee chat, brief call, or advice)
+7. Use the specified tone: ${messageTone}
+8. Be authentic and human, not overly sales-y
+9. End with gratitude and respect for their time
+10. No subject line needed (LinkedIn messages don't use them)
 
-**Format:**
-- Subject line first
-- Professional email body
-- Appropriate closing
+**LinkedIn Message Structure:**
+- Friendly greeting with their name
+- Brief personal introduction and connection reason
+- Specific mention of their company/role
+- Your interest in the position with relevant details
+- Soft ask for advice, insights, or connection
+- Gracious closing
 
-Generate a personalized email message that feels authentic and increases the chance of getting a positive response.
+**Important Notes:**
+- This is a LinkedIn connection message, not an email
+- Keep it conversational but professional
+- Focus on building a genuine connection, not just asking for a job
+- Show respect for their expertise and time
+- Make it easy for them to say yes to a brief conversation
+
+Generate a personalized LinkedIn message that feels authentic, respectful, and likely to get a positive response.
 `;
 
       let generatedMessage;
@@ -350,7 +371,7 @@ Generate a personalized email message that feels authentic and increases the cha
             messageTone: messageTone,
             customInstructions: customInstructions || null,
             generatedMessage: generatedMessage,
-            updatedAt: new Date(), // Assuming you have an updatedAt field
+            updatedAt: new Date(),
           })
           .where(eq(messages.id, id))
           .returning();

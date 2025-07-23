@@ -17,7 +17,6 @@ export const createProfile = actionClient
       .then((res) => res[0]);
 
     if (existing) {
-      // Update existing profile
       await db
         .update(profiles)
         .set({
@@ -26,7 +25,6 @@ export const createProfile = actionClient
         })
         .where(eq(profiles.userId, clerkId));
     } else {
-      // Insert new profile
       await db.insert(profiles).values({
         userId: clerkId,
         email,
